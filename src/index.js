@@ -8,9 +8,11 @@ list.append('parrot');
 list.prepend('hamster');
 
 console.log(`List before pop: ${list.toString()}`);
+console.log(list.size());
 list.pop();
 console.log(`List after pop: ${list.toString()}`);
-list.insertAt('inserted', 0);
+console.log(list.size());
+list.insertAt('inserted', 2);
 console.log(list.contains('dog'));
 console.log(list.find('dog'));
 console.log(list.head());

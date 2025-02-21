@@ -5,41 +5,39 @@ class LinkedList {
     listSize;
     listHead;
     listTail;
-    items;
     constructor(){
         this.listHead = null;
         this.listTail = null;
         this.listSize = 0;
         this.index = 0;
-        this.items = {};
     }
 
     append(value) {
-        const newValue = new Node(value);
+        const newNode = new Node(value);
         if( this.listHead === null) {
-            this.listHead = newValue;
-            this.listTail = newValue;
-            newValue.index = 0;
+            this.listHead = newNode;
+            this.listTail = newNode;
+            newNode.index = 0;
         } else {
-            newValue.index = this.index + 1;
-            this.listTail.next = newValue;
-            this.listTail = newValue;
+            newNode.index = this.index + 1;
+            this.listTail.next = newNode;
+            this.listTail = newNode;
             this.index++;
         }
         this.listSize++;
     }
 
     prepend( value ) {
-        const newValue = new Node( value );
+        const newNode = new Node( value );
         if( this.listHead === null) {
-            this.listHead = newValue;
-            this.listTail = newValue;
-            newValue.index = 0;
+            this.listHead = newNode;
+            this.listTail = newNode;
+            newNode.index = 0;
         } else {
             let hold = this.listHead;
-            newValue.index = 0;
-            this.listHead = newValue;
-            newValue.next = hold;
+            newNode.index = 0;
+            this.listHead = newNode;
+            newNode.next = hold;
 
             while ( hold !== null ) {
                 hold.index = hold.index + 1;
@@ -74,7 +72,7 @@ class LinkedList {
 
     pop() {
         this.listSize = this.listSize - 1;
-        this.listTail = this.at(this.listSize - 1 );
+        this.listTail = this.at( this.index - 1 );
         this.listTail.next = null;
         this.index = this.index - 1
     }
@@ -99,25 +97,40 @@ class LinkedList {
 
     insertAt( value, index ) {
         if ( index === 0 ) {
+             console.log("inseted index prep");
             this.prepend( value );
         } else if ( index === this.index ) {
-            this.append( value );
+            console.log("inseted index app");
+
+            const next = this.at( index );
+            const previous = this.at( index - 1 );
+            const newNode = new Node( value );
+            newNode.index = index;
+            newNode.next = next;
+            previous.next = newNode;
+            next.index = index + 1;
+
+            this.index++;
+            this.listSize++;
+
         } else {
             const toMove = this.at( index );
-            const newValue = new Node( value );
-            newValue.index = index;
-            newValue.next = toMove;
-            console.log(newValue);
+            const previous = this.at( index - 1 );
+            const newNode = new Node( value );
+            newNode.index = index;
+            console.log("inseted index" + newNode.index + " " + newNode.value);
+            newNode.next = toMove;
+            previous.next = newNode;
 
             //update subsequent indeces
-            let hold = newValue.next;
+            let hold = toMove;
             while ( hold !== null ) {
-                hold.index = index + 1;
+                hold.index = hold.index + 1;
                 hold = hold.next;
             }
             this.index++;
+            this.listSize++;
         }
-        this.listSize++;
     }
 
     toString() {
