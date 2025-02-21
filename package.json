@@ -1,4 +1,7 @@
 {
+  "name": "cjs-source-with-esm-distribution",
+  "main": "./dist/index.mjs",
+  "type": "module",
   "scripts": {
     "dev": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
